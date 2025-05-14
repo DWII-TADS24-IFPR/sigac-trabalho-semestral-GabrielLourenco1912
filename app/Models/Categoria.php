@@ -14,7 +14,7 @@ class Categoria extends Model
     protected $fillable = [
         'nome',
         'descricao',
-        'maximo-horas',
+        'maximo_horas',
         'curso_id'
     ];
 

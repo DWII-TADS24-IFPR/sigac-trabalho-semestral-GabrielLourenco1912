@@ -12,7 +12,8 @@ class NivelController extends Controller
      */
     public function index()
     {
-        //
+        $nivels = Nivel::all();
+        return view('nivels.index', compact('nivels'));
     }
 
     /**
@@ -20,7 +21,7 @@ class NivelController extends Controller
      */
     public function create()
     {
-        //
+        return view('nivels.create');
     }
 
     /**
@@ -28,7 +29,13 @@ class NivelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nome' => 'required|string|max:255|unique:nivels,nome',
+        ]);
+
+        Nivel::create($data);
+
+        return redirect()->route('nivels.index')->with('success', 'Nível criado com sucesso!');
     }
 
     /**
@@ -36,7 +43,7 @@ class NivelController extends Controller
      */
     public function show(Nivel $nivel)
     {
-        //
+        return view('nivels.show', compact('nivel'));
     }
 
     /**
@@ -44,7 +51,7 @@ class NivelController extends Controller
      */
     public function edit(Nivel $nivel)
     {
-        //
+        return view('nivels.edit', compact('nivel'));
     }
 
     /**
@@ -52,7 +59,13 @@ class NivelController extends Controller
      */
     public function update(Request $request, Nivel $nivel)
     {
-        //
+        $data = $request->validate([
+            'nome' => 'required|string|max:255|unique:nivels,nome,' . $nivel->id,
+        ]);
+
+        $nivel->update($data);
+
+        return redirect()->route('nivels.index')->with('success', 'Nível atualizado com sucesso!');
     }
 
     /**
@@ -60,6 +73,8 @@ class NivelController extends Controller
      */
     public function destroy(Nivel $nivel)
     {
-        //
+        $nivel->delete();
+
+        return redirect()->route('nivels.index')->with('success', 'Nível removido com sucesso!');
     }
 }

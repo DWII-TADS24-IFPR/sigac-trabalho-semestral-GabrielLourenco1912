@@ -35,12 +35,20 @@
 
             <div class="mb-3">
                 <label for="curso" class="form-label">Curso</label>
-                <input type="text" name="curso" id="curso" class="form-control" value="{{ old('curso') }}" required>
+                <select name="curso" id="curso" class="form-select" required>
+                    @foreach($cursos as $curso)
+                        <option value="{{ $curso->id }}" {{ $aluno->curso_id == $curso->id ? 'selected' : '' }}>{{ $curso->nome }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">
                 <label for="turma" class="form-label">Turma</label>
-                <input type="text" name="turma" id="turma" class="form-control" value="{{ old('turma') }}" required>
+                <select name="turma" id="turma" class="form-select" required>
+                    @foreach($turmas as $turma)
+                        <option value="{{ $turma->id }}" {{ $aluno->turma_id == $turma->id ? 'selected' : '' }}>{{ $turma->nome }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">

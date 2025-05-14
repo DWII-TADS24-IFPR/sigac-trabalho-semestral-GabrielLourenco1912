@@ -34,8 +34,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="curso_id" class="form-label">Curso</label>
-                <select name="curso_id" id="curso_id" class="form-select" required>
+                <label for="curso" class="form-label">Curso</label>
+                <select name="curso" id="curso" class="form-select" required>
                     @foreach($cursos as $curso)
                         <option value="{{ $curso->id }}" {{ $aluno->curso_id == $curso->id ? 'selected' : '' }}>{{ $curso->nome }}</option>
                     @endforeach
@@ -43,8 +43,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="turma_id" class="form-label">Turma</label>
-                <select name="turma_id" id="turma_id" class="form-select" required>
+                <label for="turma" class="form-label">Turma</label>
+                <select name="turma" id="turma" class="form-select" required>
                     @foreach($turmas as $turma)
                         <option value="{{ $turma->id }}" {{ $aluno->turma_id == $turma->id ? 'selected' : '' }}>{{ $turma->nome }}</option>
                     @endforeach

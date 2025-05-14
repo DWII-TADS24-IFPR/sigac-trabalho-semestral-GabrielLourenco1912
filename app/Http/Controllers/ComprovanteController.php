@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comprovante;
+use App\Models\Categoria;
+use App\Models\Aluno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComprovanteController extends Controller
 {
@@ -12,7 +15,8 @@ class ComprovanteController extends Controller
      */
     public function index()
     {
-        //
+        $comprovantes = Comprovante::with(['categoria', 'aluno', 'user'])->get();
+        return view('comprovantes.index', compact('comprovantes'));
     }
 
     /**
@@ -20,7 +24,9 @@ class ComprovanteController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+        $alunos = Aluno::all();
+        return view('comprovantes.create', compact('categorias', 'alunos'));
     }
 
     /**
@@ -28,7 +34,18 @@ class ComprovanteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'horas' => 'required|integer|min:1',
+            'atividade' => 'required|string|max:255',
+            'categoria_id' => 'required|exists:categorias,id',
+            'aluno_id' => 'required|exists:alunos,id',
+        ]);
+
+        $data['user_id'] = 1;
+
+        Comprovante::create($data);
+
+        return redirect()->route('comprovantes.index')->with('success', 'Comprovante criado com sucesso!');
     }
 
     /**
@@ -36,7 +53,7 @@ class ComprovanteController extends Controller
      */
     public function show(Comprovante $comprovante)
     {
-        //
+        return view('comprovantes.show', compact('comprovante'));
     }
 
     /**
@@ -44,7 +61,9 @@ class ComprovanteController extends Controller
      */
     public function edit(Comprovante $comprovante)
     {
-        //
+        $categorias = Categoria::all();
+        $alunos = Aluno::all();
+        return view('comprovantes.edit', compact('comprovante', 'categorias', 'alunos'));
     }
 
     /**
@@ -52,7 +71,16 @@ class ComprovanteController extends Controller
      */
     public function update(Request $request, Comprovante $comprovante)
     {
-        //
+        $data = $request->validate([
+            'horas' => 'required|integer|min:1',
+            'atividade' => 'required|string|max:255',
+            'categoria_id' => 'required|exists:categorias,id',
+            'aluno_id' => 'required|exists:alunos,id',
+        ]);
+
+        $comprovante->update($data);
+
+        return redirect()->route('comprovantes.index')->with('success', 'Comprovante atualizado com sucesso!');
     }
 
     /**
@@ -60,6 +88,8 @@ class ComprovanteController extends Controller
      */
     public function destroy(Comprovante $comprovante)
     {
-        //
+        $comprovante->delete();
+
+        return redirect()->route('comprovantes.index')->with('success', 'Comprovante removido com sucesso!');
     }
 }

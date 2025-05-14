@@ -23,7 +23,10 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        return view('alunos.create');
+        $cursos = Curso::all();
+        $turmas = Turma::all();
+
+        return view('alunos.create', compact('cursos', 'turmas'));
     }
 
     /**
@@ -33,12 +36,17 @@ class AlunoController extends Controller
     {
         $data = $request->validate([
             'nome' => 'required|string|max:255',
-            'email' => 'required|email|unique:alunos',
+            'email' => 'required|email|unique:alunos,email',
             'idade' => 'required|integer|min:1',
             'senha' => 'required|string|min:6|confirmed',
+            'senha_confirmation' => 'required|string|min:6|confirmed',
             'curso' => 'required|string|max:255',
             'turma' => 'required|string|max:255',
         ]);
+
+        if ($request->senha !== $request->senha_confirmation) {
+            return back()->withErrors(['password' => 'As senhas não coincidem.']);
+        }
 
         $curso = Curso::where('nome', $request->curso)->first();
 
@@ -75,7 +83,10 @@ class AlunoController extends Controller
      */
     public function edit(Aluno $aluno)
     {
-        return view('alunos.edit', compact('aluno'));
+        $cursos = Curso::all();
+        $turmas = Turma::all();
+
+        return view('alunos.edit', compact('cursos', 'turmas',  'aluno'));
     }
 
     /**
@@ -88,9 +99,13 @@ class AlunoController extends Controller
             'email' => 'required|email|unique:alunos,email,' . $aluno->id,
             'idade' => 'required|integer|min:1',
             'senha' => 'nullable|string|min:6|confirmed',
-            'curso_id' => 'required|integer',
-            'turma_id' => 'required|integer',
+            'curso' => 'required|string|max:255',
+            'turma' => 'required|string|max:255',
         ]);
+
+        if ($request->senha !== $request->senha_confirmation) {
+            return back()->withErrors(['password' => 'As senhas não coincidem.']);
+        }
 
         $curso = Curso::where('nome', $request->curso)->first();
 

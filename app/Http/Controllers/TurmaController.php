@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Turma;
+use App\Models\Curso;
 use Illuminate\Http\Request;
 
 class TurmaController extends Controller
@@ -12,7 +13,8 @@ class TurmaController extends Controller
      */
     public function index()
     {
-        //
+        $turmas = Turma::with('curso')->get();
+        return view('turmas.index', compact('turmas'));
     }
 
     /**
@@ -20,7 +22,8 @@ class TurmaController extends Controller
      */
     public function create()
     {
-        //
+        $cursos = Curso::all();
+        return view('turmas.create', compact('cursos'));
     }
 
     /**
@@ -28,7 +31,14 @@ class TurmaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'curso_id' => 'required|exists:cursos,id',
+            'ano' => 'required|integer|min:2000|max:' . (date('Y') + 10),
+        ]);
+
+        Turma::create($data);
+
+        return redirect()->route('turmas.index')->with('success', 'Turma criada com sucesso!');
     }
 
     /**
@@ -36,7 +46,7 @@ class TurmaController extends Controller
      */
     public function show(Turma $turma)
     {
-        //
+        return view('turmas.show', compact('turma'));
     }
 
     /**
@@ -44,7 +54,8 @@ class TurmaController extends Controller
      */
     public function edit(Turma $turma)
     {
-        //
+        $cursos = Curso::all();
+        return view('turmas.edit', compact('turma', 'cursos'));
     }
 
     /**
@@ -52,7 +63,14 @@ class TurmaController extends Controller
      */
     public function update(Request $request, Turma $turma)
     {
-        //
+        $data = $request->validate([
+            'curso_id' => 'required|exists:cursos,id',
+            'ano' => 'required|integer|min:2000|max:' . (date('Y') + 10),
+        ]);
+
+        $turma->update($data);
+
+        return redirect()->route('turmas.index')->with('success', 'Turma atualizada com sucesso!');
     }
 
     /**
@@ -60,6 +78,7 @@ class TurmaController extends Controller
      */
     public function destroy(Turma $turma)
     {
-        //
+        $turma->delete();
+        return redirect()->route('turmas.index')->with('success', 'Turma removida com sucesso!');
     }
 }

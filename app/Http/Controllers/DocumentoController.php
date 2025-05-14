@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use App\Models\Categoria;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DocumentoController extends Controller
@@ -12,7 +14,8 @@ class DocumentoController extends Controller
      */
     public function index()
     {
-        //
+        $documentos = Documento::with(['categoria', 'user'])->get();
+        return view('documentos.index', compact('documentos'));
     }
 
     /**
@@ -20,7 +23,9 @@ class DocumentoController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+        $usuarios = User::all();
+        return view('documentos.create', compact('categorias', 'usuarios'));
     }
 
     /**
@@ -28,7 +33,18 @@ class DocumentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'url' => 'required|url|max:255',
+            'horas_in' => 'required|integer|min:0',
+            'status' => 'required|string|max:255',
+            'comentario' => 'nullable|string|max:1000',
+            'categoria_id' => 'required|exists:categorias,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        Documento::create($data);
+
+        return redirect()->route('documentos.index')->with('success', 'Documento criado com sucesso!');
     }
 
     /**
@@ -36,7 +52,7 @@ class DocumentoController extends Controller
      */
     public function show(Documento $documento)
     {
-        //
+        return view('documentos.show', compact('documento'));
     }
 
     /**
@@ -44,7 +60,9 @@ class DocumentoController extends Controller
      */
     public function edit(Documento $documento)
     {
-        //
+        $categorias = Categoria::all();
+        $usuarios = User::all();
+        return view('documentos.edit', compact('documento', 'categorias', 'usuarios'));
     }
 
     /**
@@ -52,7 +70,18 @@ class DocumentoController extends Controller
      */
     public function update(Request $request, Documento $documento)
     {
-        //
+        $data = $request->validate([
+            'url' => 'required|url|max:255',
+            'horas_in' => 'required|integer|min:0',
+            'status' => 'required|string|max:255',
+            'comentario' => 'nullable|string|max:1000',
+            'categoria_id' => 'required|exists:categorias,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $documento->update($data);
+
+        return redirect()->route('documentos.index')->with('success', 'Documento atualizado com sucesso!');
     }
 
     /**
@@ -60,6 +89,8 @@ class DocumentoController extends Controller
      */
     public function destroy(Documento $documento)
     {
-        //
+        $documento->delete();
+
+        return redirect()->route('documentos.index')->with('success', 'Documento removido com sucesso!');
     }
 }
