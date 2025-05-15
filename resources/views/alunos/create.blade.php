@@ -24,29 +24,29 @@
             </div>
 
             <div class="mb-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input type="text" name="cpf" id="cpf" class="form-control" value="{{ old('cpf') }}" required>
+            </div>
+
+            <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
                 <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
             </div>
 
             <div class="mb-3">
-                <label for="idade" class="form-label">Idade</label>
-                <input type="number" name="idade" id="idade" class="form-control" value="{{ old('idade') }}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="curso" class="form-label">Curso</label>
-                <select name="curso" id="curso" class="form-select" required>
+                <label for="curso_id" class="form-label">Curso</label>
+                <select name="curso_id" id="curso_id" class="form-select" required>
                     @foreach($cursos as $curso)
-                        <option value="{{ $curso->id }}" {{ $aluno->curso_id == $curso->id ? 'selected' : '' }}>{{ $curso->nome }}</option>
+                        <option value="{{ $curso->id }}" {{ old('curso_id') == $curso->id ? 'selected' : '' }}>{{ $curso->nome }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="turma" class="form-label">Turma</label>
-                <select name="turma" id="turma" class="form-select" required>
+                <label for="turma_id" class="form-label">Turma</label>
+                <select name="turma_id" id="turma_id" class="form-select" required>
                     @foreach($turmas as $turma)
-                        <option value="{{ $turma->id }}" {{ $aluno->turma_id == $turma->id ? 'selected' : '' }}>{{ $turma->nome }}</option>
+                        <option value="{{ $turma->id }}" {{ old('turma_id') == $turma->id ? 'selected' : '' }}>{{ $turma->curso->sigla }} {{ $turma->ano }}</option>
                     @endforeach
                 </select>
             </div>

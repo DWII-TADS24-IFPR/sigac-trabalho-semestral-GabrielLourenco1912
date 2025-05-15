@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Curso;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -35,20 +36,12 @@ class CategoriaController extends Controller
             'nome' => 'required|string|max:255',
             'descricao' => 'required|min:6|max:255',
             'maximo_horas' => 'required|integer|min:1',
-            'curso' => 'required|string|max:255',
+            'curso_id' => 'required|string|max:255',
         ]);
-
-        $curso = Curso::where('nome', $request->curso)->first();
-
-        if (!$curso) {
-            return back()->withErrors(['curso' => 'Curso não encontrado']);
-        }
-
-        $data['curso'] = $curso->id;
 
         $categoria = Categoria::create($data);
 
-        return redirect()->route('categorias.index')->with('success', 'Categoria editada com sucesso!');
+        return redirect()->route('categorias.index')->with('success', 'Categoria criada com sucesso!');
     }
 
     /**
@@ -80,14 +73,6 @@ class CategoriaController extends Controller
             'maximo-horas' => 'required|integer|min:1',
             'curso_id' => 'required|string|max:255',
         ]);
-
-        $curso = Curso::where('nome', $request->curso)->first();
-
-        if (!$curso) {
-            return back()->withErrors(['curso' => 'Curso não encontrado']);
-        }
-
-        $data['curso'] = $curso->id;
 
         $categoria->update($data);
 

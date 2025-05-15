@@ -25,6 +25,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Criar Turma</button>
+            <a href="{{ route('turmas.index') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 @endsection

@@ -44,5 +44,6 @@
                 </tbody>
             </table>
         @endif
+        <a href="{{ route('index') }}" class="btn btn-secondary">Voltar a Página Inicial</a>
     </div>
 @endsection

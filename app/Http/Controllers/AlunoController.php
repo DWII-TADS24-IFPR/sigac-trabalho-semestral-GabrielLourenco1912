@@ -6,6 +6,7 @@ use App\Models\Aluno;
 use App\Models\Curso;
 use App\Models\Turma;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AlunoController extends Controller
 {
@@ -36,33 +37,15 @@ class AlunoController extends Controller
     {
         $data = $request->validate([
             'nome' => 'required|string|max:255',
+            'cpf' => 'required|string|unique:alunos,cpf',
             'email' => 'required|email|unique:alunos,email',
             'idade' => 'required|integer|min:1',
             'senha' => 'required|string|min:6|confirmed',
-            'senha_confirmation' => 'required|string|min:6|confirmed',
-            'curso' => 'required|string|max:255',
-            'turma' => 'required|string|max:255',
+            'curso_id' => 'required|string|max:255',
+            'turma_id' => 'required|string|max:255',
         ]);
 
-        if ($request->senha !== $request->senha_confirmation) {
-            return back()->withErrors(['password' => 'As senhas não coincidem.']);
-        }
-
-        $curso = Curso::where('nome', $request->curso)->first();
-
-        if (!$curso) {
-            return back()->withErrors(['curso' => 'Curso não encontrado']);
-        }
-
-        $turma = Turma::where('nome', $request->turma)->first();
-
-        if (!$turma) {
-            return back()->withErrors(['turma' => 'Curso não encontrado']);
-        }
-
         $data['user_id'] = 1;
-        $data['curso'] = $curso->id;
-        $data['turma'] = $turma->id;
         $data['senha'] = Hash::make($data['senha']);
 
         $aluno = Aluno::create($data);
@@ -96,32 +79,13 @@ class AlunoController extends Controller
     {
         $data = $request->validate([
             'nome' => 'required|string|max:255',
+            'cpf' => 'required|string|unique:alunos,cpf,' . $aluno->id,
             'email' => 'required|email|unique:alunos,email,' . $aluno->id,
-            'idade' => 'required|integer|min:1',
-            'senha' => 'nullable|string|min:6|confirmed',
-            'curso' => 'required|string|max:255',
-            'turma' => 'required|string|max:255',
+            'curso_id' => 'required|string|max:255',
+            'turma_id' => 'required|string|max:255',
         ]);
 
-        if ($request->senha !== $request->senha_confirmation) {
-            return back()->withErrors(['password' => 'As senhas não coincidem.']);
-        }
-
-        $curso = Curso::where('nome', $request->curso)->first();
-
-        if (!$curso) {
-            return back()->withErrors(['curso' => 'Curso não encontrado']);
-        }
-
-        $turma = Turma::where('nome', $request->turma)->first();
-
-        if (!$turma) {
-            return back()->withErrors(['turma' => 'Curso não encontrado']);
-        }
-
         $data['user_id'] = 1;
-        $data['curso'] = $curso->id;
-        $data['turma'] = $turma->id;
 
         if (!empty($data['senha'])) {
             $data['senha'] = Hash::make($data['senha']);

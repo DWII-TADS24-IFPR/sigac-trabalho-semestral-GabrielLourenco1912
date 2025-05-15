@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             $this->generateAlunos(50)
         );
 
+        $this->call([
+            EixoSeeder::class,
+        ]);
     }
 
     private function generateAlunos($quantidade)
@@ -32,11 +35,12 @@ class DatabaseSeeder extends Seeder
                 'nome' => fake()->name(),
                 'email' => fake()->unique()->safeEmail(),
                 'data_nascimento' => fake()->date(),
-                'turma_id' => rand(1, 3), // Associa a uma turma aleatória
+                'turma_id' => rand(1, 3),
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
         }
         return $alunos;
     }
+
 }

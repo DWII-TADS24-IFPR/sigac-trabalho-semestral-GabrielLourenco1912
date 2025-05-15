@@ -18,7 +18,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th>Máximo de Horas<</th>
+                    <th>Máximo de Horas</th>
                     <th>Curso</th>
                 </tr>
                 </thead>
@@ -26,8 +26,8 @@
                 @foreach ($categorias as $categoria)
                     <tr>
                         <td>{{ $categoria->nome }}</td>
-                        <td>{{ $categoria->email }}</td>
-                        <td>{{ $categoria->idade }}</td>
+                        <td>{{ $categoria->descricao }}</td>
+                        <td>{{ $categoria->maximo_horas }}</td>
                         <td>{{ $categoria->curso->nome }}</td>
                         <td><a href="{{ route('categorias.show', $categoria) }}" class="btn btn-info">Ver</a></td>
                         <td><a href="{{ route('categorias.edit', $categoria) }}" class="btn btn-warning">Editar</a></td>
@@ -43,5 +43,6 @@
                 </tbody>
             </table>
         @endif
+        <a href="{{ route('index') }}" class="btn btn-secondary">Voltar a Página Inicial</a>
     </div>
 @endsection

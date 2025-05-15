@@ -15,7 +15,7 @@
             </div>
         @endif
 
-        <form action="{{ route('categorias.update') }}" method="POST">
+        <form action="{{ route('categorias.update', $categoria->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -33,12 +33,11 @@
                 <label for="maximo_horas" class="form-label">Máximo de Horas</label>
                 <input type="number" name="maximo_horas" id="maximo_horas" class="form-control" value="{{ old('maximo_horas') }}" required>
             </div>
-
             <div class="mb-3">
-                <label for="curso" class="form-label">Curso</label>
-                <select name="curso" id="curso" class="form-select" required>
+                <label for="curso_id" class="form-label">Curso</label>
+                <select name="curso_id" id="curso_id" class="form-select" required>
                     @foreach($cursos as $curso)
-                        <option value="{{ $curso->id }}" {{ $aluno->curso_id == $curso->id ? 'selected' : '' }}>{{ $curso->nome }}</option>
+                        <option value="{{ $curso->id }}" {{ old('curso_id') == $curso->id ? 'selected' : '' }}>{{ $curso->nome }}</option>
                     @endforeach
                 </select>
             </div>

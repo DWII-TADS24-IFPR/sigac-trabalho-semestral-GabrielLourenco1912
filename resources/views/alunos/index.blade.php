@@ -20,6 +20,7 @@
                     <th>Email</th>
                     <th>Idade</th>
                     <th>Curso</th>
+                    <th>Turma</th>
                     <th>Visualizar</th>
                     <th>Editar</th>
                     <th>Remover</th>
@@ -30,8 +31,9 @@
                     <tr>
                         <td>{{ $aluno->nome }}</td>
                         <td>{{ $aluno->email }}</td>
-                        <td>{{ $aluno->idade }}</td>
+                        <td>{{ $aluno->cpf }}</td>
                         <td>{{ $aluno->curso->nome }}</td>
+                        <td>{{ $aluno->turma->curso->sigla }} {{ $aluno->turma->ano }}</td>
                         <td><a href="{{ route('alunos.show', $aluno) }}" class="btn btn-info">Ver</a></td>
                         <td><a href="{{ route('alunos.edit', $aluno) }}" class="btn btn-warning">Editar</a></td>
                         <td>
@@ -46,5 +48,6 @@
                 </tbody>
             </table>
         @endif
+        <a href="{{ route('index') }}" class="btn btn-secondary">Voltar a Página Inicial</a>
     </div>
 @endsection

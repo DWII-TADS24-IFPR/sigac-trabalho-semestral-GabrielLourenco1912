@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('role_id')->nullable();
+            $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles')->OnDelete('cascade')->OnUpdate('cascade');
-            $table->unsignedBigInteger('curso_id')->nullable();
+            $table->unsignedBigInteger('curso_id');
             $table->foreign('curso_id')->references('id')->on('cursos')->OnDelete('cascade')->OnUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();

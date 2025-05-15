@@ -16,7 +16,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Nome</th>
                     <th>Curso</th>
                     <th>Ano</th>
                     <th>Visualizar</th>
@@ -27,7 +26,6 @@
                 <tbody>
                 @foreach ($turmas as $turma)
                     <tr>
-                        <td>{{ $turma->nome }}</td>
                         <td>{{ $turma->curso->nome }}</td>
                         <td>{{ $turma->ano }}</td>
                         <td><a href="{{ route('turmas.show', $turma) }}" class="btn btn-info">Ver</a></td>
@@ -44,5 +42,6 @@
                 </tbody>
             </table>
         @endif
+        <a href="{{ route('index') }}" class="btn btn-secondary">Voltar a Página Inicial</a>
     </div>
 @endsection

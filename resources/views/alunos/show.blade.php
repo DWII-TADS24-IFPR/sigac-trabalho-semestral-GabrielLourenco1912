@@ -13,7 +13,7 @@
         </div>
 
         <div class="mb-3">
-            <strong>Idade:</strong> {{ $aluno->idade }}
+            <strong>CPF:</strong> {{ $aluno->cpf }}
         </div>
 
         <div class="mb-3">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mb-3">
-            <strong>Turma:</strong> {{ $aluno->turma->nome ?? 'Não informado' }}
+            <strong>Turma:</strong> {{ $aluno->turma?->curso?->sigla }} {{ $aluno->turma?->ano ?? 'Não informado' }}
         </div>
 
         <a href="{{ route('alunos.index') }}" class="btn btn-primary">Voltar</a>
