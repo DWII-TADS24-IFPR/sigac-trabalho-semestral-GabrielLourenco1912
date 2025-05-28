@@ -14,8 +14,6 @@ class Aluno extends Model
     protected $fillable = [
         'nome',
         'cpf',
-        'email',
-        'senha',
         'user_id',
         'curso_id',
         'turma_id'

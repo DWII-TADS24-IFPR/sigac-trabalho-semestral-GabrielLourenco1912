@@ -12,7 +12,8 @@ class EixoController extends Controller
      */
     public function index()
     {
-        //
+        $eixos = Eixo::all();
+        return view('eixos.index', compact('eixos'));
     }
 
     /**
@@ -20,7 +21,7 @@ class EixoController extends Controller
      */
     public function create()
     {
-        //
+        return view('eixos.create');
     }
 
     /**
@@ -28,7 +29,15 @@ class EixoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+
+        Eixo::create([
+            'nome' => $request->nome,
+        ]);
+
+        return redirect()->route('eixos.index')->with('success', 'Eixo criado com sucesso!');
     }
 
     /**
@@ -36,7 +45,7 @@ class EixoController extends Controller
      */
     public function show(Eixo $eixo)
     {
-        //
+        return view('eixos.show', compact('eixo'));
     }
 
     /**
@@ -44,7 +53,7 @@ class EixoController extends Controller
      */
     public function edit(Eixo $eixo)
     {
-        //
+        return view('eixos.edit', compact('eixo'));
     }
 
     /**
@@ -52,7 +61,15 @@ class EixoController extends Controller
      */
     public function update(Request $request, Eixo $eixo)
     {
-        //
+        $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+
+        $eixo->update([
+            'nome' => $request->nome,
+        ]);
+
+        return redirect()->route('eixos.index')->with('success', 'Eixo atualizado com sucesso!');
     }
 
     /**
@@ -60,6 +77,8 @@ class EixoController extends Controller
      */
     public function destroy(Eixo $eixo)
     {
-        //
+        $eixo->delete();
+
+        return redirect()->route('eixos.index')->with('success', 'Eixo deletado com sucesso!');
     }
 }

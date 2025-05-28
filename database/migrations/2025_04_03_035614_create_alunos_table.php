@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('cpf');
-            $table->string('email') -> Unique();
-            $table->string('senha');
             $table->unsignedBigInteger('user_id')-> nullable();
             $table->foreign('user_id')->references('id')->on('users')->OnDelete('cascade')->OnUpdate('cascade');
             $table->unsignedBigInteger('curso_id')-> nullable();

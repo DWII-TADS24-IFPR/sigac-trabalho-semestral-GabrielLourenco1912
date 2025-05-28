@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aluno;
 use App\Models\Curso;
 use App\Models\Turma;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,8 +27,9 @@ class AlunoController extends Controller
     {
         $cursos = Curso::all();
         $turmas = Turma::all();
+        $users = User::all();
 
-        return view('alunos.create', compact('cursos', 'turmas'));
+        return view('alunos.create', compact('cursos', 'turmas', 'users'));
     }
 
     /**
@@ -36,17 +38,18 @@ class AlunoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nome' => 'required|string|max:255',
+            'user_id' => 'required|integer',
             'cpf' => 'required|string|unique:alunos,cpf',
-            'email' => 'required|email|unique:alunos,email',
-            'idade' => 'required|integer|min:1',
-            'senha' => 'required|string|min:6|confirmed',
             'curso_id' => 'required|string|max:255',
             'turma_id' => 'required|string|max:255',
         ]);
 
-        $data['user_id'] = 1;
-        $data['senha'] = Hash::make($data['senha']);
+        $user = User::find($data['user_id']);
+
+        $user->role_id = 3;
+        $user->save();
+
+        $data['nome'] = $user->name;
 
         $aluno = Aluno::create($data);
 
@@ -80,18 +83,11 @@ class AlunoController extends Controller
         $data = $request->validate([
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string|unique:alunos,cpf,' . $aluno->id,
-            'email' => 'required|email|unique:alunos,email,' . $aluno->id,
             'curso_id' => 'required|string|max:255',
             'turma_id' => 'required|string|max:255',
         ]);
 
-        $data['user_id'] = 1;
-
-        if (!empty($data['senha'])) {
-            $data['senha'] = Hash::make($data['senha']);
-        } else {
-            unset($data['senha']);
-        }
+        $data['user_id'] = $aluno->user_id;
 
         $aluno->update($data);
 

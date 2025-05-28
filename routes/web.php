@@ -11,7 +11,7 @@ use App\Http\Controllers\NivelController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\ComprovanteController;
-use App\Http\Middleware\CheckRole;
+use App\Http\Controllers\EixoController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -21,6 +21,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'checkrole:3.2'])->group(function () {
+
+// Comprovantes
+
+    Route::get('/comprovantes', [ComprovanteController::class, 'index'])->name('comprovantes.index');
+
+    Route::get('/comprovantes/create', [ComprovanteController::class, 'create'])->name('comprovantes.create');
+
+    Route::get('/comprovantes/{comprovante}/show', [ComprovanteController::class, 'show'])->name('comprovantes.show');
+
+    Route::get('/comprovantes/{comprovante}/edit', [ComprovanteController::class, 'edit'])->name('comprovantes.edit');
+
+    Route::post('/comprovantes', [ComprovanteController::class, 'store'])->name('comprovantes.store');
+
+    Route::put('/comprovantes/{comprovante}', [ComprovanteController::class, 'update'])->name('comprovantes.update');
+
+    Route::delete('/comprovantes/{comprovante}', [ComprovanteController::class, 'destroy'])->name('comprovantes.destroy');
 });
 
 Route::middleware(['auth', 'checkrole:2'])->group(function () {
@@ -56,22 +75,6 @@ Route::middleware(['auth', 'checkrole:2'])->group(function () {
     Route::put('/categorias/{categoria}', [CategoriaController::class, 'update'])->name('categorias.update');
 
     Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
-
-// Comprovantes
-
-    Route::get('/comprovantes', [ComprovanteController::class, 'index'])->name('comprovantes.index');
-
-    Route::get('/comprovantes/create', [ComprovanteController::class, 'create'])->name('comprovantes.create');
-
-    Route::get('/comprovantes/{comprovante}/show', [ComprovanteController::class, 'show'])->name('comprovantes.show');
-
-    Route::get('/comprovantes/{comprovante}/edit', [ComprovanteController::class, 'edit'])->name('comprovantes.edit');
-
-    Route::post('/comprovantes', [ComprovanteController::class, 'store'])->name('comprovantes.store');
-
-    Route::put('/comprovantes/{comprovantes}', [ComprovanteController::class, 'update'])->name('comprovantes.update');
-
-    Route::delete('/comprovantes/{comprovantes}', [ComprovanteController::class, 'destroy'])->name('comprovantes.destroy');
 
 // Cursos
 
@@ -152,6 +155,23 @@ Route::middleware(['auth', 'checkrole:2'])->group(function () {
     Route::put('/turmas/{turma}', [TurmaController::class, 'update'])->name('turmas.update');
 
     Route::delete('/turmas/{turma}', [TurmaController::class, 'destroy'])->name('turmas.destroy');
+
+//Eixos
+
+    Route::get('/eixos', [EixoController::class, 'index'])->name('eixos.index');
+
+    Route::get('/eixos/create', [EixoController::class, 'create'])->name('eixos.create');
+
+    Route::get('/eixos/{eixo}/show', [EixoController::class, 'show'])->name('eixos.show');
+
+    Route::get('/eixos/{eixo}/edit', [EixoController::class, 'edit'])->name('eixos.edit');
+
+    Route::post('/eixos', [EixoController::class, 'store'])->name('eixos.store');
+
+    Route::put('/eixos/{eixo}', [EixoController::class, 'update'])->name('eixos.update');
+
+    Route::delete('/eixos/{eixo}', [EixoController::class, 'destroy'])->name('eixos.destroy');
+
 });
 
 require __DIR__.'/auth.php';

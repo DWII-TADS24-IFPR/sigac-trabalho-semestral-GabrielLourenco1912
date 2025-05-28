@@ -29,14 +29,14 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-4">
+                <div class="flex gap-6">
                     <a href="{{ route('declaracaos.index') }}"
                        class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
                         Voltar
                     </a>
 
                     <a href="{{ route('declaracaos.edit', $declaracao->id) }}"
-                       class="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">
+                       class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
                         Editar
                     </a>
                 </div>

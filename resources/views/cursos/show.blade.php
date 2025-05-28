@@ -1,30 +1,51 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Detalhes do Curso
+        </h2>
+    </x-slot>
 
-@section('content')
-    <div class="container">
-        <h1>Detalhes do Curso</h1>
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 space-y-6">
 
-        <div class="mb-3">
-            <strong>Nome:</strong> {{ $curso->nome }}
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Informações do Curso</h2>
+
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>Nome:</strong> {{ $curso->nome }}
+                    </div>
+
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>Sigla:</strong> {{ $curso->sigla }}
+                    </div>
+
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>Total de Horas:</strong> {{ $curso->total_horas }}
+                    </div>
+
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>Nível:</strong> {{ $curso->nivel->nome ?? 'Não informado' }}
+                    </div>
+
+                    <div class="mb-6 text-gray-700 dark:text-gray-300">
+                        <strong>Eixo:</strong> {{ $curso->eixo->nome ?? 'Não informado' }}
+                    </div>
+                </div>
+
+                <div class="flex gap-6">
+                    <a href="{{ route('cursos.index') }}"
+                       class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+                        Voltar
+                    </a>
+
+                    <a href="{{ route('cursos.edit', $curso) }}"
+                       class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                        Editar
+                    </a>
+                </div>
+
+            </div>
         </div>
-
-        <div class="mb-3">
-            <strong>Sigla:</strong> {{ $curso->sigla }}
-        </div>
-
-        <div class="mb-3">
-            <strong>Total de Horas:</strong> {{ $curso->total_horas }}
-        </div>
-
-        <div class="mb-3">
-            <strong>Nível:</strong> {{ $curso->nivel->nome ?? 'Não informado' }}
-        </div>
-
-        <div class="mb-3">
-            <strong>Eixo:</strong> {{ $curso->eixo->nome ?? 'Não informado' }}
-        </div>
-
-        <a href="{{ route('cursos.index') }}" class="btn btn-primary">Voltar</a>
-        <a href="{{ route('cursos.edit', $curso) }}" class="btn btn-warning">Editar</a>
     </div>
-@endsection
+</x-app-layout>

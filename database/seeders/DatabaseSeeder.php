@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB; // Para inserções no banco
-use Illuminate\Support\Str; // Para strings aleatórias
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\Aluno;
 use App\Models\Turma;
 

@@ -1,15 +1,44 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Detalhes do Comprovante
+        </h2>
+    </x-slot>
 
-@section('content')
-    <div class="container">
-        <h1>Detalhes do Comprovante</h1>
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 space-y-6">
 
-        <p><strong>ID:</strong> {{ $comprovante->id }}</p>
-        <p><strong>Horas:</strong> {{ $comprovante->horas }}</p>
-        <p><strong>Atividade:</strong> {{ $comprovante->atividade }}</p>
-        <p><strong>Categoria:</strong> {{ $comprovante->categoria->nome ?? '-' }}</p>
-        <p><strong>Aluno:</strong> {{ $comprovante->aluno->nome ?? '-' }}</p>
+                <div>
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>ID:</strong> {{ $comprovante->id }}
+                    </div>
 
-        <a href="{{ route('comprovantes.index') }}" class="btn btn-secondary">Voltar</a>
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>Horas:</strong> {{ $comprovante->horas }}
+                    </div>
+
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>Atividade:</strong> {{ $comprovante->atividade }}
+                    </div>
+
+                    <div class="mb-3 text-gray-700 dark:text-gray-300">
+                        <strong>Categoria:</strong> {{ $comprovante->categoria->nome ?? '-' }}
+                    </div>
+
+                    <div class="mb-6 text-gray-700 dark:text-gray-300">
+                        <strong>Aluno:</strong> {{ $comprovante->aluno->nome ?? '-' }}
+                    </div>
+                </div>
+
+                <div class="flex gap-6">
+                    <a href="{{ route('comprovantes.index') }}"
+                       class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+                        Voltar
+                    </a>
+                </div>
+
+            </div>
+        </div>
     </div>
-@endsection
+</x-app-layout>
