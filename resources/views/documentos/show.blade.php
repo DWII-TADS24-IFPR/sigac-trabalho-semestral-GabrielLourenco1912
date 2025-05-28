@@ -1,39 +1,62 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Detalhes do Documento
+        </h2>
+    </x-slot>
 
-@section('content')
-    <div class="container">
-        <h1>Detalhes do Documento</h1>
+    <div class="py-12">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 space-y-6">
 
-        <div class="mb-3">
-            <strong>Usuário:</strong> {{ $documento->user->name ?? 'N/A' }}
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Usuário:</strong>
+                    <span class="ml-2 text-gray-900 dark:text-gray-100">{{ $documento->user->name ?? 'N/A' }}</span>
+                </div>
+
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Categoria:</strong>
+                    <span class="ml-2 text-gray-900 dark:text-gray-100">{{ $documento->categoria->nome ?? 'N/A' }}</span>
+                </div>
+
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Status:</strong>
+                    <span class="ml-2 text-gray-900 dark:text-gray-100">{{ ucfirst($documento->status) }}</span>
+                </div>
+
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Horas:</strong>
+                    <span class="ml-2 text-gray-900 dark:text-gray-100">{{ $documento->horas_in }}</span>
+                </div>
+
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Comentário:</strong>
+                    <p class="ml-2 text-gray-900 dark:text-gray-100">{{ $documento->comentario }}</p>
+                </div>
+
+                <div>
+                    <strong class="text-gray-700 dark:text-gray-300">Arquivo:</strong>
+                    <span class="ml-2">
+                        @if ($documento->url)
+                            <a href="{{ asset('storage/' . $documento->url) }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-600 transition">
+                                Visualizar Documento
+                            </a>
+                        @else
+                            <span class="text-gray-500 dark:text-gray-400">Nenhum arquivo enviado.</span>
+                        @endif
+                    </span>
+                </div>
+
+                <div class="flex gap-6">
+                    <a href="{{ route('documentos.index') }}" class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+                        Voltar
+                    </a>
+                    <a href="{{ route('documentos.edit', $documento->id) }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                        Editar
+                    </a>
+                </div>
+
+            </div>
         </div>
-
-        <div class="mb-3">
-            <strong>Categoria:</strong> {{ $documento->categoria->nome ?? 'N/A' }}
-        </div>
-
-        <div class="mb-3">
-            <strong>Status:</strong> {{ ucfirst($documento->status) }}
-        </div>
-
-        <div class="mb-3">
-            <strong>Horas:</strong> {{ $documento->horas_in }}
-        </div>
-
-        <div class="mb-3">
-            <strong>Comentário:</strong> {{ $documento->comentario }}
-        </div>
-
-        <div class="mb-3">
-            <strong>Arquivo:</strong>
-            @if ($documento->url)
-                <a href="{{ asset('storage/' . $documento->url) }}" target="_blank">Visualizar Documento</a>
-            @else
-                Nenhum arquivo enviado.
-            @endif
-        </div>
-
-        <a href="{{ route('documentos.index') }}" class="btn btn-primary">Voltar</a>
-        <a href="{{ route('documentos.edit', $documento->id) }}" class="btn btn-warning">Editar</a>
     </div>
-@endsection
+</x-app-layout>

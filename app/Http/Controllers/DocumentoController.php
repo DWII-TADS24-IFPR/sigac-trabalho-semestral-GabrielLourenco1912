@@ -33,16 +33,23 @@ class DocumentoController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'url' => 'required|url|max:255',
+        $request->validate([
+            'url' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:2048',
             'horas_in' => 'required|integer|min:0',
-            'status' => 'required|string|max:255',
-            'comentario' => 'nullable|string|max:1000',
             'categoria_id' => 'required|exists:categorias,id',
-            'user_id' => 'required|exists:users,id',
+            'comentario' => 'nullable|string|max:1000',
         ]);
 
-        Documento::create($data);
+        $path = $request->file('url')->store('documentos', 'public');
+
+        Documento::create([
+            'url' => $path,
+            'horas_in' => $request->horas_in,
+            'categoria_id' => $request->categoria_id,
+            'comentario' => $request->comentario,
+            'status' => 'pendente', // ou outro valor padrão
+            'user_id' => auth()->id(),
+        ]);
 
         return redirect()->route('documentos.index')->with('success', 'Documento criado com sucesso!');
     }
