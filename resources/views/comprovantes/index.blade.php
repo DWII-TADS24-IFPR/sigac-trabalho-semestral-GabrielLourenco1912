@@ -41,35 +41,39 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                             @foreach ($comprovantes as $comprovante)
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->id }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->horas }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->atividade }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->categoria->nome ?? '-' }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->aluno->nome ?? '-' }}</td>
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('comprovantes.show', $comprovante) }}"
-                                           class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                                            Ver
-                                        </a>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('comprovantes.edit', $comprovante) }}"
-                                           class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                                            Editar
-                                        </a>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <form action="{{ route('comprovantes.destroy', $comprovante) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja excluir?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                    class="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs">
-                                                Excluir
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                @if($comprovante->user_id == auth()->id() || auth()->user()->role_id == 2)
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->id }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->horas }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->atividade }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->categoria->nome ?? '-' }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $comprovante->aluno->nome ?? '-' }}</td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('comprovantes.show', $comprovante) }}"
+                                               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                                                Ver
+                                            </a>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('comprovantes.edit', $comprovante) }}"
+                                               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                                                Editar
+                                            </a>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <form action="{{ route('comprovantes.destroy', $comprovante) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs">
+                                                    Excluir
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @else
+                                    @continue
+                                @endif
                             @endforeach
                             </tbody>
                         </table>

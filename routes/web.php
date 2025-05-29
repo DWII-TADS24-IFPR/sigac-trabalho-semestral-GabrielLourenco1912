@@ -25,24 +25,43 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'checkrole:3.2'])->group(function () {
 
-// Comprovantes
+// Documentos
 
-    Route::get('/comprovantes', [ComprovanteController::class, 'index'])->name('comprovantes.index');
+    Route::get('/documentos', [DocumentoController::class, 'index'])->name('documentos.index');
 
-    Route::get('/comprovantes/create', [ComprovanteController::class, 'create'])->name('comprovantes.create');
+    Route::get('/documentos/create', [DocumentoController::class, 'create'])->name('documentos.create');
 
-    Route::get('/comprovantes/{comprovante}/show', [ComprovanteController::class, 'show'])->name('comprovantes.show');
+    Route::get('/documentos/{documento}/show', [DocumentoController::class, 'show'])->name('documentos.show');
 
-    Route::get('/comprovantes/{comprovante}/edit', [ComprovanteController::class, 'edit'])->name('comprovantes.edit');
+    Route::get('/documentos/{documento}/edit', [DocumentoController::class, 'edit'])->name('documentos.edit');
 
-    Route::post('/comprovantes', [ComprovanteController::class, 'store'])->name('comprovantes.store');
+    Route::post('/documentos', [DocumentoController::class, 'store'])->name('documentos.store');
 
-    Route::put('/comprovantes/{comprovante}', [ComprovanteController::class, 'update'])->name('comprovantes.update');
+    Route::put('/documentos/{documento}', [DocumentoController::class, 'update'])->name('documentos.update');
 
-    Route::delete('/comprovantes/{comprovante}', [ComprovanteController::class, 'destroy'])->name('comprovantes.destroy');
+    Route::delete('/documentos/{documento}', [DocumentoController::class, 'destroy'])->name('documentos.destroy');
+
+//Declaração
+
+    Route::get('/declaracaos', [DeclaracaoController::class, 'index'])->name('declaracaos.index');
+
+    Route::get('/declaracaos/create', [DeclaracaoController::class, 'create'])->name('declaracaos.create');
+
+    Route::get('/declaracaos/{declaracao}/show', [DeclaracaoController::class, 'show'])->name('declaracaos.show');
+
+    Route::put('/declaracaos/{declaracao}', [DeclaracaoController::class, 'update'])->name('declaracaos.update');
+
+    Route::delete('/declaracaos/{declaracao}', [DeclaracaoController::class, 'destroy'])->name('declaracaos.destroy');
+
 });
 
 Route::middleware(['auth', 'checkrole:2'])->group(function () {
+
+//Declaração
+
+    Route::post('/declaracaos', [DeclaracaoController::class, 'store'])->name('declaracaos.store');
+
+    Route::get('/declaracaos/{declaracao}/edit', [DeclaracaoController::class, 'edit'])->name('declaracaos.edit');
 
 // Pessoa
 
@@ -92,37 +111,22 @@ Route::middleware(['auth', 'checkrole:2'])->group(function () {
 
     Route::delete('/cursos/{curso}', [CursoController::class, 'destroy'])->name('cursos.destroy');
 
-//Declaração
 
-    Route::get('/declaracaos', [DeclaracaoController::class, 'index'])->name('declaracaos.index');
+// Comprovantes
 
-    Route::get('/declaracaos/create', [DeclaracaoController::class, 'create'])->name('declaracaos.create');
+    Route::get('/comprovantes', [ComprovanteController::class, 'index'])->name('comprovantes.index');
 
-    Route::get('/declaracaos/{declaracao}/show', [DeclaracaoController::class, 'show'])->name('declaracaos.show');
+    Route::get('/comprovantes/create', [ComprovanteController::class, 'create'])->name('comprovantes.create');
 
-    Route::get('/declaracaos/{declaracao}/edit', [DeclaracaoController::class, 'edit'])->name('declaracaos.edit');
+    Route::get('/comprovantes/{comprovante}/show', [ComprovanteController::class, 'show'])->name('comprovantes.show');
 
-    Route::post('/declaracaos', [DeclaracaoController::class, 'store'])->name('declaracaos.store');
+    Route::get('/comprovantes/{comprovante}/edit', [ComprovanteController::class, 'edit'])->name('comprovantes.edit');
 
-    Route::put('/declaracaos/{declaracao}', [DeclaracaoController::class, 'update'])->name('declaracaos.update');
+    Route::post('/comprovantes', [ComprovanteController::class, 'store'])->name('comprovantes.store');
 
-    Route::delete('/declaracaos/{declaracao}', [DeclaracaoController::class, 'destroy'])->name('declaracaos.destroy');
+    Route::put('/comprovantes/{comprovante}', [ComprovanteController::class, 'update'])->name('comprovantes.update');
 
-// Documentos
-
-    Route::get('/documentos', [DocumentoController::class, 'index'])->name('documentos.index');
-
-    Route::get('/documentos/create', [DocumentoController::class, 'create'])->name('documentos.create');
-
-    Route::get('/documentos/{documento}/show', [DocumentoController::class, 'show'])->name('documentos.show');
-
-    Route::get('/documentos/{documento}/edit', [DocumentoController::class, 'edit'])->name('documentos.edit');
-
-    Route::post('/documentos', [DocumentoController::class, 'store'])->name('documentos.store');
-
-    Route::put('/documentos/{documento}', [DocumentoController::class, 'update'])->name('documentos.update');
-
-    Route::delete('/documentos/{documento}', [DocumentoController::class, 'destroy'])->name('documentos.destroy');
+    Route::delete('/comprovantes/{comprovante}', [ComprovanteController::class, 'destroy'])->name('comprovantes.destroy');
 
 // Nivel
 

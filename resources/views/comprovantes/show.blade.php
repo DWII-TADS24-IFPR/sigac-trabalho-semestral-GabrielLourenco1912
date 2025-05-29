@@ -29,6 +29,17 @@
                     <div class="mb-6 text-gray-700 dark:text-gray-300">
                         <strong>Aluno:</strong> {{ $comprovante->aluno->nome ?? '-' }}
                     </div>
+
+                    <strong class="text-gray-700 dark:text-gray-300">Arquivo:</strong>
+                    <span class="ml-2">
+                        @if (\App\Models\Documento::find($comprovante->documento_id)->url)
+                            <a href="{{ asset('storage/' . \App\Models\Documento::find($comprovante->documento_id)->url) }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-600 transition">
+                                Visualizar Documento
+                            </a>
+                        @else
+                            <span class="text-gray-500 dark:text-gray-400">Nenhum arquivo enviado.</span>
+                        @endif
+                    </span>
                 </div>
 
                 <div class="flex gap-6">

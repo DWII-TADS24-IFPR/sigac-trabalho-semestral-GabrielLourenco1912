@@ -22,6 +22,12 @@
                 @method('PUT')
 
                 <div>
+                    <label for="hash" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hash</label>
+                    <input type="text" name="hash" id="hash" value="{{ old('hash', $comprovante->hash) }}" required
+                           class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
                     <label for="horas" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Horas
                     </label>
@@ -90,6 +96,24 @@
                             <option value="{{ $aluno->id }}"
                                 {{ old('aluno_id', $comprovante->aluno_id) == $aluno->id ? 'selected' : '' }}>
                                 {{ $aluno->nome }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="documento_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Solicitação
+                    </label>
+                    <select
+                        name="documento_id"
+                        id="documento_id"
+                        required
+                        class="mt-1 block w-full rounded-md border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    >
+                        @foreach ($documentos as $documento)
+                            <option value="{{ $documento->id }}" {{ old('aluno_id') == $documento->id ? 'selected' : '' }}>
+                                {{ $documento->comentario }}
                             </option>
                         @endforeach
                     </select>

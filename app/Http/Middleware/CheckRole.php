@@ -23,7 +23,7 @@ class CheckRole
             $rolesArray = array_map('intval', $rolesArray);
 
             if (!in_array((int)$user->role_id, $rolesArray)) {
-                abort(403, 'Acesso negado.' . $roles);
+                abort(403, 'Acesso negado.');
             }
         }
 

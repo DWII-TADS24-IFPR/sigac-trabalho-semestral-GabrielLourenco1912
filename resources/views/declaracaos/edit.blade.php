@@ -24,12 +24,6 @@
                     @method('PUT')
 
                     <div>
-                        <label for="hash" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hash</label>
-                        <input type="text" name="hash" id="hash" value="{{ old('hash', $declaracao->hash) }}" required
-                               class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-
-                    <div>
                         <label for="data" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data</label>
                         <input type="date" name="data" id="data" value="{{ old('data', $declaracao->data) }}" required
                                class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -52,14 +46,18 @@
                         <select name="comprovante_id" id="comprovante_id"
                                 class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             @foreach ($comprovantes as $comprovante)
-                                <option value="{{ $comprovante->id }}" {{ $declaracao->comprovante_id == $comprovante->id ? 'selected' : '' }}>
-                                    {{ $comprovante->nome }}
-                                </option>
+                                @if($comprovante->user_id == auth()->id() || auth()->user()->role_id == 2)
+                                    <option value="{{ $comprovante->id }}" {{ $declaracao->comprovante_id == $comprovante->id ? 'selected' : '' }}>
+                                        {{ $comprovante->hash }}
+                                    </option>
+                                @else
+                                    @continue
+                                @endif
                             @endforeach
                         </select>
                     </div>
 
-                    <div class="flex gap-6>
+                    <div class="flex gap-6">
                         <button type="submit"
                                 class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
                             Salvar

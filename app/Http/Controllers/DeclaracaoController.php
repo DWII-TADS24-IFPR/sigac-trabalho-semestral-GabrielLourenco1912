@@ -34,7 +34,6 @@ class DeclaracaoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'hash' => 'required|string|max:255|unique:declaracaos,hash',
             'data' => 'required|date',
             'aluno_id' => 'required|exists:alunos,id',
             'comprovante_id' => 'required|exists:comprovantes,id',
@@ -69,7 +68,6 @@ class DeclaracaoController extends Controller
     public function update(Request $request, Declaracao $declaracao)
     {
         $data = $request->validate([
-            'hash' => 'required|string|max:255|unique:declaracaos,hash,' . $declaracao->id,
             'data' => 'required|date',
             'aluno_id' => 'required|exists:alunos,id',
             'comprovante_id' => 'required|exists:comprovantes,id',

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('comprovantes', function (Blueprint $table) {
             $table->id();
+            $table->string('hash');
             $table->float('horas');
             $table->string('atividade');
             $table->unsignedBigInteger('categoria_id') -> nullable();
@@ -21,6 +22,8 @@ return new class extends Migration
             $table->foreign('aluno_id')->references('id')->on('alunos')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('user_id') -> nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('documento_id') -> nullable();
+            $table->foreign('documento_id')->references('id')->on('documentos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

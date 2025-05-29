@@ -41,7 +41,7 @@
                             </li>
                             <li>
                                 <a href="{{ route('documentos.index') }}" class="block p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition">
-                                    Documentos
+                                    Solicitações
                                 </a>
                             </li>
                             <li>

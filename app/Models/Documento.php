@@ -28,4 +28,8 @@ class Documento extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function documento()
+    {
+        return $this-> hasMany(Documento::class);
+    }
 }

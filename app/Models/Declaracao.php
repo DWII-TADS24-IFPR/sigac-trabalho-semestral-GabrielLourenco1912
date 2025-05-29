@@ -13,7 +13,6 @@ class Declaracao extends Model
     protected $table = 'declaracaos';
     protected $fillable =
         [
-            'hash',
             'data',
             'aluno_id',
             'comprovante_id'

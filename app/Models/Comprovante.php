@@ -13,11 +13,13 @@ class Comprovante extends Model
     protected $table = 'comprovantes';
 
     protected $fillable = [
+        'hash',
         'horas',
         'atividade',
         'categoria_id',
         'aluno_id',
-        'user_id'
+        'user_id',
+        'documento_id',
     ];
 
     public function categoria()
@@ -31,6 +33,10 @@ class Comprovante extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function documento()
+    {
+        return $this->belongsTo(Documento::class);
     }
 
 }

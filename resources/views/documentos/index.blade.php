@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Documentos Enviados
+            Solicitações Enviadas
         </h2>
     </x-slot>
 
@@ -12,7 +12,7 @@
                 <div class="flex items-center justify-between">
                     <a href="{{ route('documentos.create') }}"
                        class="inline-block px-4 py-2 mb-6 bg-green-600 text-white rounded hover:bg-green-700 transition">
-                        Enviar Novo Documento
+                        Nova Solicitação
                     </a>
                 </div>
 
@@ -39,38 +39,42 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                             @foreach ($documentos as $documento)
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $documento->user->name ?? 'N/A' }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $documento->categoria->nome ?? 'Sem categoria' }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ ucfirst($documento->status) }}</td>
+                                @if(($documento->user_id == auth()->id() && $documento->status == 'pendente') || (auth()->user()->role_id == 2 && $documento->status == 'pendente'))
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $documento->user->name ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $documento->categoria->nome ?? 'Sem categoria' }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ ucfirst($documento->status) }}</td>
 
 
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('documentos.edit', $documento) }}"
-                                           class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                                            Editar
-                                        </a>
-                                    </td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('documentos.edit', $documento) }}"
+                                               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                                                Editar
+                                            </a>
+                                        </td>
 
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('documentos.show', $documento) }}"
-                                           class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                                            Ver
-                                        </a>
-                                    </td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('documentos.show', $documento) }}"
+                                               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                                                Ver
+                                            </a>
+                                        </td>
 
-                                    <td class="px-6 py-4">
-                                        <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST"
-                                              onsubmit="return confirm('Deseja remover este documento?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                    class="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs">
-                                                Remover
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                        <td class="px-6 py-4">
+                                            <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST"
+                                                  onsubmit="return confirm('Deseja remover este documento?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs">
+                                                    Remover
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @else
+                                    @continue
+                                @endif
                             @endforeach
                             </tbody>
                         </table>

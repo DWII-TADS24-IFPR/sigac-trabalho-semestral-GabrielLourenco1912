@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Enviar Documento
+            Detalhes da Declaração
         </h2>
     </x-slot>
 
@@ -10,8 +10,6 @@
             <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 space-y-6">
 
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Detalhes da Declaração</h2>
-
                     <div class="mb-3 text-gray-700 dark:text-gray-300">
                         <strong>Hash:</strong> {{ $declaracao->hash }}
                     </div>
@@ -25,7 +23,7 @@
                     </div>
 
                     <div class="mb-6 text-gray-700 dark:text-gray-300">
-                        <strong>Comprovante:</strong> {{ $declaracao->comprovante->nome ?? 'Não informado' }}
+                        <strong>Comprovante:</strong> {{ $declaracao->comprovante->hash?? 'Não informado' }}
                     </div>
                 </div>
 

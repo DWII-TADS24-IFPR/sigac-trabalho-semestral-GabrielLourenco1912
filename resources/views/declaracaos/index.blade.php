@@ -29,7 +29,6 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-100 dark:bg-gray-700">
                             <tr>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Hash</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Data</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Aluno</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Comprovante</th>
@@ -40,37 +39,40 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                             @foreach ($declaracoes as $declaracao)
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $declaracao->hash }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $declaracao->data }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $declaracao->aluno->nome ?? 'N/A' }}</td>
-                                    <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $declaracao->comprovante->nome ?? 'N/A' }}</td>
+                                @if(\App\Models\Aluno::find($declaracao->aluno_id)->user_id == auth()->id() || auth()->user()->role_id == 2)
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $declaracao->data }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $declaracao->aluno->nome ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ \App\Models\Comprovante::find($declaracao->comprovante_id)->hash ?? 'N/A' }}</td>
 
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('declaracaos.show', $declaracao) }}"
-                                           class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                                            Ver
-                                        </a>
-                                    </td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('declaracaos.show', $declaracao) }}"
+                                               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                                                Ver
+                                            </a>
+                                        </td>
 
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('declaracaos.edit', $declaracao) }}"
-                                           class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                                            Editar
-                                        </a>
-                                    </td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('declaracaos.edit', $declaracao) }}"
+                                               class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                                                Editar
+                                            </a>
+                                        </td>
 
-                                    <td class="px-6 py-4">
-                                        <form action="{{ route('declaracaos.destroy', $declaracao) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                    class="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs">
-                                                Remover
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                        <td class="px-6 py-4">
+                                            <form action="{{ route('declaracaos.destroy', $declaracao) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs">
+                                                    Remover
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @else
+                                    {{ $declaracao->user_id . ' '. auth()->id() }}
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
