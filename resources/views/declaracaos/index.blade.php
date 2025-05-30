@@ -71,7 +71,7 @@
                                         </td>
                                     </tr>
                                 @else
-                                    {{ $declaracao->user_id . ' '. auth()->id() }}
+                                    @continue
                                 @endif
                             @endforeach
                             </tbody>

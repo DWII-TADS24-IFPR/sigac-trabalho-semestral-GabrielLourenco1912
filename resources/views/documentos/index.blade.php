@@ -39,7 +39,7 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                             @foreach ($documentos as $documento)
-                                @if(($documento->user_id == auth()->id() && $documento->status == 'pendente') || (auth()->user()->role_id == 2 && $documento->status == 'pendente'))
+                                @if(($documento->user_id == auth()->id()) || (auth()->user()->role_id == 2 && $documento->status == 'pendente'))
                                     <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                         <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $documento->user->name ?? 'N/A' }}</td>
                                         <td class="px-6 py-4 text-gray-900 dark:text-gray-100">{{ $documento->categoria->nome ?? 'Sem categoria' }}</td>

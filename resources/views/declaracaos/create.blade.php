@@ -33,7 +33,11 @@
                         <select name="aluno_id" id="aluno_id" required
                                 class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             @foreach ($alunos as $aluno)
-                                <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
+                                @if($aluno->user_id == auth()->id() || auth()->user()->role_id == 2)
+                                    <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
+                                @else
+                                    @continue
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -43,7 +47,7 @@
                         <select name="comprovante_id" id="comprovante_id"
                                 class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             @foreach ($comprovantes as $comprovante)
-                                @if(\App\Models\Aluno::find($comprovante->aluno_id)->user_id == auth()->id() || auth()->user()->role_id == 2)
+                                @if( ($comprovante->aluno->user_id == auth()->id() && !$ids->contains($comprovante->id)) || (auth()->user()->role_id == 2 && !$ids->contains($comprovante->id)))
                                     <option value="{{ $comprovante->id }}">{{ $comprovante->hash }}</option>
                                 @else
                                     @continue

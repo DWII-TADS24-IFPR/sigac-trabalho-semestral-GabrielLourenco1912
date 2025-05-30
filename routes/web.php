@@ -39,29 +39,30 @@ Route::middleware(['auth', 'checkrole:3.2'])->group(function () {
 
     Route::put('/documentos/{documento}', [DocumentoController::class, 'update'])->name('documentos.update');
 
-    Route::delete('/documentos/{documento}', [DocumentoController::class, 'destroy'])->name('documentos.destroy');
-
 //Declaração
 
     Route::get('/declaracaos', [DeclaracaoController::class, 'index'])->name('declaracaos.index');
 
     Route::get('/declaracaos/create', [DeclaracaoController::class, 'create'])->name('declaracaos.create');
 
+    Route::post('/declaracaos', [DeclaracaoController::class, 'store'])->name('declaracaos.store');
+
     Route::get('/declaracaos/{declaracao}/show', [DeclaracaoController::class, 'show'])->name('declaracaos.show');
-
-    Route::put('/declaracaos/{declaracao}', [DeclaracaoController::class, 'update'])->name('declaracaos.update');
-
-    Route::delete('/declaracaos/{declaracao}', [DeclaracaoController::class, 'destroy'])->name('declaracaos.destroy');
 
 });
 
 Route::middleware(['auth', 'checkrole:2'])->group(function () {
+// Documentos
+
+    Route::delete('/documentos/{documento}', [DocumentoController::class, 'destroy'])->name('documentos.destroy');
 
 //Declaração
 
-    Route::post('/declaracaos', [DeclaracaoController::class, 'store'])->name('declaracaos.store');
-
     Route::get('/declaracaos/{declaracao}/edit', [DeclaracaoController::class, 'edit'])->name('declaracaos.edit');
+
+    Route::put('/declaracaos/{declaracao}', [DeclaracaoController::class, 'update'])->name('declaracaos.update');
+
+    Route::delete('/declaracaos/{declaracao}', [DeclaracaoController::class, 'destroy'])->name('declaracaos.destroy');
 
 // Pessoa
 

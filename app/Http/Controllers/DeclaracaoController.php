@@ -24,8 +24,10 @@ class DeclaracaoController extends Controller
     public function create()
     {
         $alunos = Aluno::all();
-        $comprovantes = Comprovante::all();
-        return view('declaracaos.create', compact('alunos', 'comprovantes'));
+        $comprovantes = Comprovante::with('aluno')->get();
+        $ids = Declaracao::query()->pluck('comprovante_id');
+
+        return view('declaracaos.create', compact('alunos', 'comprovantes', 'ids'));
     }
 
     /**

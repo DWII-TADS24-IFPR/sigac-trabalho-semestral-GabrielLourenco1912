@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('comprovantes', function (Blueprint $table) {
             $table->id();
-            $table->string('hash');
+            $table->string('hash')->nullable();
             $table->float('horas');
             $table->string('atividade');
             $table->unsignedBigInteger('categoria_id') -> nullable();

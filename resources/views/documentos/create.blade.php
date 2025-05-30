@@ -25,7 +25,7 @@
 
                 <div>
                     <label for="url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Arquivo</label>
-                    <input type="file" name="url" id="url" required
+                    <input type="file" name="url" id="url"
                            class="mt-1 block w-full text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 

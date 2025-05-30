@@ -34,20 +34,24 @@ class DocumentoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'url' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+            'url' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
             'horas_in' => 'required|integer|min:0',
             'categoria_id' => 'required|exists:categorias,id',
             'comentario' => 'nullable|string|max:1000',
         ]);
 
-        $path = $request->file('url')->store('documentos', 'public');
+        if ($request->hasFile('url')) {
+            $path = $request->file('url')->store('documentos', 'public');
+        } else {
+            $path = null;
+        }
 
         Documento::create([
             'url' => $path,
             'horas_in' => $request->horas_in,
             'categoria_id' => $request->categoria_id,
             'comentario' => $request->comentario,
-            'status' => 'pendente', // ou outro valor padrão
+            'status' => 'pendente',
             'user_id' => auth()->id(),
         ]);
 
@@ -78,12 +82,11 @@ class DocumentoController extends Controller
     public function update(Request $request, Documento $documento)
     {
         $data = $request->validate([
-            'url' => 'required|url|max:255',
+            'url' => 'url|max:255',
             'horas_in' => 'required|integer|min:0',
             'status' => 'required|string|max:255',
             'comentario' => 'nullable|string|max:1000',
             'categoria_id' => 'required|exists:categorias,id',
-            'user_id' => 'required|exists:users,id',
         ]);
 
         $documento->update($data);

@@ -29,9 +29,9 @@
                     <span class="ml-2 text-gray-900 dark:text-gray-100">{{ $documento->horas_in }}</span>
                 </div>
 
-                <div>
+                <div class="flex items-center space-x-2">
                     <strong class="text-gray-700 dark:text-gray-300">Comentário:</strong>
-                    <p class="ml-2 text-gray-900 dark:text-gray-100">{{ $documento->comentario }}</p>
+                    <p class="text-gray-900 dark:text-gray-100 flex-1 ml-2">{{ $documento->comentario }}</p>
                 </div>
 
                 <div>

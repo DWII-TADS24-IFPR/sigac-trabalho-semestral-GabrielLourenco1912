@@ -6,14 +6,29 @@ use App\Models\Comprovante;
 use App\Models\Categoria;
 use App\Models\Aluno;
 use App\Models\Documento;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ComprovanteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function geraPDF($comprovante)
+    {
+        $pdf = Pdf::loadView('comprovantes.pdf', compact('comprovante'));
+
+        $nomeArquivo = 'comprovante_' . Categoria::find($comprovante->categoria_id)->nome . '_' . time() . '.pdf';
+
+        $comprovante->hash = $nomeArquivo;
+        $comprovante->save();
+
+        Storage::disk('public')->put('documentos/' . $nomeArquivo, $pdf->output());
+
+        return $pdf->stream($nomeArquivo);
+    }
     public function index()
     {
         $comprovantes = Comprovante::with(['categoria', 'aluno', 'user'])->get();
@@ -38,7 +53,7 @@ class ComprovanteController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'hash' => 'required|string|max:255|unique:comprovantes,hash',
+            'hash' => 'nullable|string|max:255|unique:comprovantes,hash',
             'horas' => 'required|integer|min:1',
             'atividade' => 'required|string|max:255',
             'categoria_id' => 'required|exists:categorias,id',
@@ -53,7 +68,9 @@ class ComprovanteController extends Controller
 
         $data['user_id'] = auth()->id();
 
-        Comprovante::create($data);
+        $comprovante = Comprovante::create($data);
+
+        $this->geraPDF($comprovante);
 
         return redirect()->route('comprovantes.index')->with('success', 'Comprovante criado com sucesso!');
     }
@@ -83,7 +100,7 @@ class ComprovanteController extends Controller
     public function update(Request $request, Comprovante $comprovante)
     {
         $data = $request->validate([
-            'hash' => 'required|string|max:255|unique:comprovantes,hash,' . $comprovante->id,
+            'hash' => 'nullable|string|max:255|unique:comprovantes,hash,' . $comprovante->id,
             'horas' => 'required|integer|min:1',
             'atividade' => 'required|string|max:255',
             'categoria_id' => 'required|exists:categorias,id',
